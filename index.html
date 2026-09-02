@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="Blin Dashboard — управление Discord-ботом через веб-панель.">
+  <title>Blin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-grid"></div>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-mark">B</span><span>BLIN</span></a>
+    <nav>
+      <a href="#features">Возможности</a>
+      <a href="#preview">Панель</a>
+      <a href="#roadmap">Roadmap</a>
+    </nav>
+    <a class="button button-small" href="#preview">Открыть Dashboard</a>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="eyebrow">BLIN BOT · DASHBOARD</div>
+      <h1>Настраивай Discord-бота.<br><span>Не Discord.</span></h1>
+      <p class="hero-text">Единая веб-панель для настройки Blin Bot. Серверы, заявки, тикеты, роли и логи — всё в одном месте, без ручного ввода ID и команд настройки.</p>
+      <div class="hero-actions">
+        <a class="button" href="#preview">Посмотреть концепцию <b>→</b></a>
+        <a class="button button-ghost" href="#features">Как это работает</a>
+      </div>
+      <div class="hero-note"><span class="status-dot"></span> Сейчас это концепция будущей панели управления</div>
+    </section>
+
+    <section id="features" class="container section">
+      <div class="section-heading"><div class="eyebrow">01 · ОСНОВА</div><h2>Discord остаётся платформой.<br>Настройка переезжает в веб.</h2></div>
+      <div class="feature-grid">
+        <article class="card feature"><div class="icon">◈</div><h3>Вход через Discord</h3><p>Пользователь авторизуется через Discord и видит только серверы, которыми имеет право управлять.</p></article>
+        <article class="card feature"><div class="icon">⌘</div><h3>Без ID</h3><p>Каналы, категории и роли выбираются из понятных списков. Никаких копирований длинных чисел.</p></article>
+        <article class="card feature"><div class="icon">✦</div><h3>Быстрая настройка</h3><p>Можно выбрать готовый сценарий и автоматически создать необходимую структуру для Blin Bot.</p></article>
+        <article class="card feature"><div class="icon">⚙</div><h3>Настройки сервера</h3><p>Каждый Discord-сервер получает собственную конфигурацию, а код бота остаётся общим.</p></article>
+      </div>
+    </section>
+
+    <section id="preview" class="container section dashboard-section">
+      <div class="section-heading"><div class="eyebrow">02 · ПРЕДПРОСМОТР</div><h2>Так будет выглядеть управление.</h2></div>
+      <div class="dashboard-shell">
+        <aside class="sidebar">
+          <div class="side-logo"><span class="brand-mark">B</span> BLIN</div>
+          <div class="server-chip"><span class="server-avatar">B</span><div><small>СЕРВЕР</small><strong>Blin Family</strong></div><span>⌄</span></div>
+          <div class="side-label">НАСТРОЙКИ</div>
+          <a class="side-link active" href="#preview">▦ Обзор</a>
+          <a class="side-link" href="#features">✎ Заявки</a>
+          <a class="side-link" href="#features">◷ Отпуска</a>
+          <a class="side-link" href="#features">♢ Тикеты</a>
+          <a class="side-link" href="#features">♧ Обзвоны</a>
+          <a class="side-link" href="#features">☷ Логи</a>
+          <div class="side-bottom"><a class="side-link" href="#roadmap">⚙ Общие настройки</a></div>
+        </aside>
+        <div class="dashboard-main">
+          <div class="dash-top"><div><span class="muted">Мои серверы /</span> Blin Family</div><span class="online"><span class="status-dot"></span> Бот подключён</span></div>
+          <div class="dash-content">
+            <div class="dash-title"><div><h3>Обзор сервера</h3><p>Основные настройки и состояние систем.</p></div><button class="button button-small">Сохранить</button></div>
+            <div class="stats"><div class="stat"><small>УЧАСТНИКИ</small><strong>2 341</strong><span>Discord</span></div><div class="stat"><small>ЗАЯВКИ</small><strong>24</strong><span>за сегодня</span></div><div class="stat"><small>АКТИВНЫЕ ТИКЕТЫ</small><strong>8</strong><span>сейчас</span></div></div>
+            <div class="settings-preview">
+              <div class="setting-head"><div><h4>Система заявок</h4><p>Настройка заявок на вступление</p></div><span class="toggle"><i></i></span></div>
+              <div class="fields"><div class="field"><label>КАНАЛ ЗАЯВОК</label><div>#заявки <span>⌄</span></div></div><div class="field"><label>КАТЕГОРИЯ ТИКЕТОВ</label><div>ЗАЯВКИ <span>⌄</span></div></div><div class="field"><label>РОЛЬ СОТРУДНИКА</label><div>@Recruiter <span>⌄</span></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="container section roadmap">
+      <div class="section-heading"><div class="eyebrow">03 · ROADMAP</div><h2>Сайт готовим сейчас.<br>Полную связку сделаем следующим этапом.</h2></div>
+      <div class="roadmap-list">
+        <div class="road active"><span>01</span><div><strong>Dashboard foundation</strong><p>Визуальная система, навигация, страницы сервера и компоненты настроек.</p></div><b>ГОТОВО</b></div>
+        <div class="road"><span>02</span><div><strong>Discord OAuth</strong><p>Авторизация и определение доступных пользователю серверов.</p></div><b>ДАЛЬШЕ</b></div>
+        <div class="road"><span>03</span><div><strong>Blin Bot API</strong><p>Связать панель с новой конфигурационной системой бота.</p></div><b>ДАЛЬШЕ</b></div>
+        <div class="road"><span>04</span><div><strong>Полная настройка</strong><p>Заявки, отпуска, тикеты, роли, каналы, логи и автоматическое создание структуры.</p></div><b>ПОЗЖЕ</b></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer"><span>© 2026 BLIN BOT</span><span>Dashboard concept · Built for the future of Blin</span></footer>
+</body>
+</html>
