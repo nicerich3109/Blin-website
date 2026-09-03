@@ -1,4 +1,4 @@
-const API_BASE = window.BLIN_API_BASE || localStorage.getItem('blin_api_base') || 'http://127.0.0.1:8080';
+const API_BASE = window.BLIN_API_BASE || localStorage.getItem('blin_api_base') || 'http://0.0.0.0:3000';
 const state = { guilds: [], guild: null, modules: {}, objects: {} };
 async function api(path, options={}) { const r=await fetch(`${API_BASE}${path}`,{credentials:'include',...options,headers:{'Content-Type':'application/json',...(options.headers||{})}}); if(!r.ok) throw new Error(await r.text()); return r.status===204?null:r.json(); }
 const esc=v=>String(v??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
