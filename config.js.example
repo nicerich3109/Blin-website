@@ -1,0 +1,3 @@
+// Copy this file to config.js for local/static deployment.
+// Never put BLIN_API_SECRET, DISCORD_CLIENT_SECRET or bot tokens here.
+window.BLIN_API_BASE = 'https://YOUR-BLIN-API-DOMAIN.example.com';
