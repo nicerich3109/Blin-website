@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08090c"><title>Blin Dashboard</title><link rel="stylesheet" href="styles.css"></head>
-<body data-dashboard="true"><div class="background-grid"></div><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">B</span><span>BLIN</span></a><nav><a href="dashboard.html?v=15">Dashboard</a><a href="admin.html?v=15" data-admin-link hidden>Админ-панель</a></nav><button class="button button-small" data-logout>Выйти</button></header>
+<body data-dashboard="true"><div class="background-grid"></div><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">B</span><span>BLIN</span></a><nav><a href="dashboard.html?v=16">Dashboard</a><a href="admin.html?v=16" data-admin-link hidden>Админ-панель</a></nav><button class="button button-small" data-logout>Выйти</button></header>
 <main class="container dashboard-page"><section class="dash-heading"><div><div class="eyebrow">BLIN DASHBOARD</div><h1>Конструктор сервера</h1><p>Роли, каналы, сообщения, права и формы настраиваются без редактирования кода.</p></div></section>
 <div class="dashboard-layout"><aside class="card guild-panel"><div class="side-label">МОИ СЕРВЕРЫ</div><div id="guild-list"></div></aside>
 <section class="dashboard-main card"><div class="dash-top"><div><span class="muted">Сервер /</span> <strong id="server-name">—</strong></div><span id="api-status" class="online"><span class="status-dot"></span>Подключение…</span></div>
@@ -16,4 +16,57 @@
 <section class="config-section" data-panel="notifications"><div class="setting-head"><div><h4>Системные сообщения в ЛС</h4><p>Согласие пользователя остаётся обязательным; здесь редактируются шаблоны уведомлений.</p></div><button class="button button-small" data-save="notifications">Сохранить</button></div><div id="notification-settings"></div></section>
 <section class="config-section" data-panel="reaction_roles"><div class="setting-head"><div><h4>Роли по кнопке / реакции</h4><p>Сообщение, картинка, канал и пары «кнопка → роль».</p></div><button class="button button-small" id="new-reaction">+ Новая панель</button></div><div id="reaction-list"></div></section>
 <section class="config-section" data-panel="autoreplies"><div class="setting-head"><div><h4>Автоответы бота</h4><p>Триггер → собственный ответ, с ограничением по каналу или роли.</p></div><button class="button button-small" id="new-reply">+ Добавить ответ</button></div><div id="autoreplies-list"></div><div class="config-actions"><button class="button" id="save-autoreplies">Сохранить автоответы</button></div></section>
-</div></div></div></section></div></main><script src="config.js?v=15"></script><script src="app.js?v=15"></script></body></html>
+</div></div></div></section></div></main>
+<script src="config.js?v=16"></script><script src="app.js?v=16"></script>
+<script>
+(function(){
+  const originalRenderApplications=window.renderApplications;
+  if(typeof originalRenderApplications==='function'){
+    window.renderApplications=function(){
+      originalRenderApplications();
+      const card=document.querySelector('#applications-settings .config-card');
+      const grid=card?.querySelector('.config-grid');
+      if(grid&&!grid.querySelector('[name="recruit_info_channel"]')) grid.insertAdjacentHTML('afterbegin',field('Канал публикации панели',channelSelect('recruit_info_channel',state.config.recruit_info_channel,'text,news')));
+    };
+  }
+  const originalSaveApplications=window.saveApplications;
+  if(typeof originalSaveApplications==='function'){
+    window.saveApplications=async function(){
+      const value=document.querySelector('#applications-settings [name="recruit_info_channel"]')?.value||'';
+      await originalSaveApplications();
+      await saveConfig({...state.config,recruit_info_channel:value});
+    };
+  }
+  async function publish(section,extra={}){
+    try{
+      setStatus('Публикация…',true);
+      await api(`/api/guilds/${id()}/publish`,{method:'POST',body:JSON.stringify({section,...extra})});
+      setStatus('Опубликовано',true);
+    }catch(e){setStatus(`Ошибка публикации: ${e.message}`,false);}
+  }
+  document.addEventListener('click',async e=>{
+    const publishButton=e.target.closest('[data-publish]');
+    if(publishButton){
+      const section=publishButton.dataset.publish;
+      try{if(section==='applications')await saveApplications();else if(section==='vacations')await saveVacations();}catch{return}
+      await publish(section,section==='vacations'?{profile:state.profile}:{});
+      return;
+    }
+    const reactionButton=e.target.closest('[data-publish-reaction]');
+    if(reactionButton){await publish('reaction_roles',{id:Number(reactionButton.dataset.publishReaction)});}
+  });
+  const originalRenderReactionRoles=window.renderReactionRoles;
+  if(typeof originalRenderReactionRoles==='function'){
+    window.renderReactionRoles=function(){
+      originalRenderReactionRoles();
+      document.querySelectorAll('#reaction-list article.config-card').forEach(article=>{
+        const edit=article.querySelector('[data-edit-reaction]');
+        if(edit&&!article.querySelector('[data-publish-reaction]')){
+          const id=edit.dataset.editReaction;
+          edit.insertAdjacentHTML('afterend',`<button class="button button-small button-ghost" data-publish-reaction="${id}">Опубликовать</button>`);
+        }
+      });
+    };
+  }
+})();
+</script></body></html>
