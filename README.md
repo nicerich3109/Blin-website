@@ -30,3 +30,6 @@ Use the `identify` and `guilds` scopes for Dashboard login.
 ## Important
 
 GitHub Pages is static hosting, so it hosts the frontend only. The Blin Bot API must run on a server/container with HTTPS. Do not put `BLIN_API_SECRET`, a bot token, or `DISCORD_CLIENT_SECRET` into this repository or into browser JavaScript.
+
+## Website
+https://nicerich3109.github.io/Blin-website/
